@@ -3,81 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mario Kart</title>
+    <title>Mario Kart - Fullscreen</title>
     <style>
-        /* Modern, dark-themed glassmorphism aesthetic */
-        body {
+        /* Force the page to be completely full screen with zero margins */
+        body, html {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #0f0f13 0%, #1a1a24 100%);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            overflow: hidden; /* Prevents scrollbars */
+        }
+
+        /* The container for the emulator fills the whole screen */
+        #game-container {
+            width: 100vw;
             height: 100vh;
+        }
+
+        /* Custom Mario-themed Start Overlay */
+        #start-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            color: #ffffff;
+            align-items: center;
+            z-index: 100; /* Keeps it on top of the emulator until clicked */
         }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 24px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+        /* Chunky Retro Nintendo Button */
+        #start-btn {
+            background-color: #E60012; /* Classic Nintendo Red */
+            color: #FFFFFF;
+            font-family: 'Arial Black', Impact, sans-serif;
+            font-size: 40px;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 20px 50px;
+            border: 6px solid #FFFFFF;
+            border-radius: 15px;
+            cursor: pointer;
+            box-shadow: 0 10px 0 #8B0000, 0 15px 20px rgba(0,0,0,0.5);
+            transition: all 0.1s ease;
         }
 
-        #game-container {
-            width: 800px;
-            height: 600px;
-            border-radius: 12px;
-            overflow: hidden;
-            background: #000;
+        /* Button click animation */
+        #start-btn:active {
+            transform: translateY(10px);
+            box-shadow: 0 0 0 #8B0000, 0 5px 10px rgba(0,0,0,0.5);
         }
 
-        .instructions {
-            margin-top: 24px;
-            text-align: center;
-            font-size: 13px;
-            letter-spacing: 0.5px;
-            opacity: 0.6;
+        .helper-text {
+            color: #fff;
+            margin-top: 20px;
+            font-family: sans-serif;
+            letter-spacing: 2px;
+            opacity: 0.7;
         }
     </style>
 </head>
 <body>
 
-    <div class="glass-card">
-        <div id="game-container"></div>
+    <div id="start-screen">
+        <button id="start-btn">Start Game</button>
+        <div class="helper-text">CLICK OR PRESS ENTER</div>
     </div>
 
-    <div class="instructions">
-        Hover over the game window and click the Gear Icon to map your WASD controls!
-    </div>
+    <div id="game-container"></div>
 
     <script type="text/javascript">
-        EJS_player = "#game-container";
-        EJS_core = "snes";
-        EJS_gameName = "Super Mario Kart";
-        EJS_gameUrl = "mariokart.sfc";
-        EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
-        EJS_volume = 0.5;
-        EJS_color = "#ffffff"; 
+        // 1. Configure the Emulator Settings
+        window.EJS_player = "#game-container";
+        window.EJS_core = "snes";
+        window.EJS_gameName = "Super Mario Kart";
+        window.EJS_gameUrl = "mariokart.sfc"; // Ensure CORS isn't blocked by using this local relative path
+        window.EJS_pathtodata = "https://cdn.emulatorjs.org/latest/data/";
         
-        EJS_Buttons = {
-            playPause: false,
-            restart: true,
-            saveState: false,
-            loadState: false,
-            cheats: false,
-            screenshot: false,
-            settings: true, 
-            fullscreen: true,
-            volume: true
+        // Skip the default EmulatorJS start screen
+        window.EJS_startOnLoaded = true; 
+        
+        // Perfected WASD controls
+        window.EJS_defaultControls = {
+            0: { 
+                0: { value: 32, value2: "BUTTON_2" },           // B (Accelerate) -> Spacebar
+                1: { value: 16, value2: "BUTTON_4" },           // Y (Brake) -> Shift
+                2: { value: 8, value2: "SELECT" },              // Select -> Backspace
+                3: { value: 13, value2: "START" },              // Start -> Enter
+                4: { value: 87, value2: "DPAD_UP" },            // Up -> W
+                5: { value: 83, value2: "DPAD_DOWN" },          // Down -> S
+                6: { value: 65, value2: "DPAD_LEFT" },          // Left -> A
+                7: { value: 68, value2: "DPAD_RIGHT" },         // Right -> D
+                8: { value: 70, value2: "BUTTON_1" },           // A (Use Item) -> F
+                9: { value: 67, value2: "BUTTON_3" },           // X (Look Back) -> C
+                10: { value: 81, value2: "LEFT_TOP_SHOULDER" }, // L (Hop) -> Q
+                11: { value: 69, value2: "RIGHT_TOP_SHOULDER" },// R (Drift) -> E
+                24: { value: 49 }, 25: { value: 50 }, 26: { value: 51 }, 
+                27: { value: 0 }, 28: { value: 0 }, 29: { value: 0 }
+            }
         };
+        
+        window.EJS_Buttons = {
+            playPause: false, restart: true, saveState: false, loadState: false,
+            cheats: false, screenshot: false, settings: true, fullscreen: true, volume: true
+        };
+
+        // 2. Custom Start Logic
+        const startScreen = document.getElementById('start-screen');
+        const startBtn = document.getElementById('start-btn');
+
+        // Function to destroy our overlay and load the emulator engine
+        function bootGame() {
+            startScreen.style.display = 'none'; // Hide the Mario button
+            
+            // Dynamically inject the engine code only AFTER user interacts
+            const script = document.createElement('script');
+            script.src = "https://cdn.emulatorjs.org/latest/data/loader.js";
+            script.crossOrigin = "anonymous"; // Explicitly allows CORS for the CDN
+            document.body.appendChild(script);
+        }
+
+        // Listen for a Mouse Click
+        startBtn.addEventListener('click', bootGame);
+
+        // Listen for the Enter Key
+        window.addEventListener('keydown', function(event) {
+            // Only trigger if the start screen is still visible
+            if (event.key === 'Enter' && startScreen.style.display !== 'none') {
+                bootGame();
+            }
+        });
     </script>
-    
-    <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
 </body>
 </html>
