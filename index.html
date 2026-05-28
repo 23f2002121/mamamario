@@ -3,75 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mario Kart - Fullscreen</title>
+    <title>Super Mario Kart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
-        /* Force the page to be completely full screen with zero margins */
+        /* Base Fullscreen Setup */
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
             background-color: #000;
-            overflow: hidden; /* Prevents scrollbars */
+            overflow: hidden;
+            font-family: 'Press Start 2P', cursive; /* Apply retro font globally */
         }
 
-        /* The container for the emulator fills the whole screen */
         #game-container {
             width: 100vw;
             height: 100vh;
         }
 
-        /* Custom Mario-themed Start Overlay */
+        /* --- MARIO THEMED START SCREEN --- */
         #start-screen {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #000;
+            /* Classic Mario Sky Blue Background */
+            background-color: #5C94FC; 
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 100; /* Keeps it on top of the emulator until clicked */
+            z-index: 100;
         }
 
-        /* Chunky Retro Nintendo Button */
-        #start-btn {
-            background-color: #E60012; /* Classic Nintendo Red */
-            color: #FFFFFF;
-            font-family: 'Arial Black', Impact, sans-serif;
-            font-size: 40px;
-            font-weight: bold;
-            text-transform: uppercase;
-            padding: 20px 50px;
-            border: 6px solid #FFFFFF;
-            border-radius: 15px;
-            cursor: pointer;
-            box-shadow: 0 10px 0 #8B0000, 0 15px 20px rgba(0,0,0,0.5);
-            transition: all 0.1s ease;
+        /* Fake CSS Ground at the bottom of the screen */
+        #start-screen::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40px;
+            background: linear-gradient(to bottom, #00A800 0%, #00A800 10px, #D8A800 10px, #D8A800 100%);
+            border-top: 4px solid #000;
+            z-index: 101;
         }
 
-        /* Button click animation */
-        #start-btn:active {
-            transform: translateY(10px);
-            box-shadow: 0 0 0 #8B0000, 0 5px 10px rgba(0,0,0,0.5);
-        }
-
-        .helper-text {
+        /* Stylized Game Title */
+        h1 {
+            font-size: 48px;
+            margin-bottom: 30px;
             color: #fff;
-            margin-top: 20px;
-            font-family: sans-serif;
-            letter-spacing: 2px;
-            opacity: 0.7;
+            text-shadow: 4px 4px 0 #000, -4px 4px 0 #000, 4px -4px 0 #000, -4px -4px 0 #000;
+            text-align: center;
+            line-height: 1.5;
+            z-index: 102;
+        }
+
+        /* Nintendo Colors for individual letters */
+        .c-red { color: #E4000F; }
+        .c-green { color: #00A800; }
+        .c-yellow { color: #F8D800; }
+        .c-blue { color: #0058F8; }
+
+        /* Retro Controls Box */
+        .controls-box {
+            background-color: rgba(0, 0, 0, 0.85);
+            border: 4px solid #fff;
+            border-radius: 8px;
+            padding: 20px 30px;
+            margin-bottom: 40px;
+            box-shadow: 8px 8px 0 rgba(0,0,0,0.5);
+            z-index: 102;
+        }
+
+        .controls-box h2 {
+            color: #F8D800;
+            text-align: center;
+            font-size: 20px;
+            margin-top: 0;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        .control-grid {
+            display: grid;
+            grid-template-columns: auto auto;
+            gap: 15px 30px;
+            color: #fff;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .key {
+            color: #E4000F; /* Red keys to pop against black */
+            text-align: right;
+        }
+
+        /* Blinking Press Start Button */
+        #start-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 24px;
+            cursor: pointer;
+            text-shadow: 3px 3px 0 #000;
+            animation: blink 1.2s infinite;
+            z-index: 102;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
         }
     </style>
 </head>
 <body>
 
     <div id="start-screen">
-        <button id="start-btn">Start Game</button>
-        <div class="helper-text">CLICK OR PRESS ENTER</div>
+        
+        <h1>
+            <span class="c-red">S</span><span class="c-green">U</span><span class="c-yellow">P</span><span class="c-blue">E</span><span class="c-red">R</span><br>
+            MARIO KART
+        </h1>
+
+        <div class="controls-box">
+            <h2>Instruction Manual</h2>
+            <div class="control-grid">
+                <div class="key">WASD</div> <div>STEER</div>
+                <div class="key">SPACE</div> <div>GAS</div>
+                <div class="key">F</div> <div>USE ITEM</div>
+                <div class="key">Q / E</div> <div>HOP & DRIFT</div>
+            </div>
+        </div>
+
+        <button id="start-btn">- PRESS START -</button>
     </div>
 
     <div id="game-container"></div>
@@ -81,13 +149,11 @@
         window.EJS_player = "#game-container";
         window.EJS_core = "snes";
         window.EJS_gameName = "Super Mario Kart";
-        window.EJS_gameUrl = "mariokart.sfc"; // Ensure CORS isn't blocked by using this local relative path
+        window.EJS_gameUrl = "mariokart.sfc"; 
         window.EJS_pathtodata = "https://cdn.emulatorjs.org/latest/data/";
+        window.EJS_startOnLoaded = true; // Auto-starts engine once injected
         
-        // Skip the default EmulatorJS start screen
-        window.EJS_startOnLoaded = true; 
-        
-        // Perfected WASD controls
+        // Perfected WASD controls (Engine-verified KeyCodes)
         window.EJS_defaultControls = {
             0: { 
                 0: { value: 32, value2: "BUTTON_2" },           // B (Accelerate) -> Spacebar
@@ -104,7 +170,8 @@
                 11: { value: 69, value2: "RIGHT_TOP_SHOULDER" },// R (Drift) -> E
                 24: { value: 49 }, 25: { value: 50 }, 26: { value: 51 }, 
                 27: { value: 0 }, 28: { value: 0 }, 29: { value: 0 }
-            }
+            },
+            1: {}, 2: {}, 3: {}
         };
         
         window.EJS_Buttons = {
@@ -115,25 +182,29 @@
         // 2. Custom Start Logic
         const startScreen = document.getElementById('start-screen');
         const startBtn = document.getElementById('start-btn');
+        let gameStarted = false; // Prevent double-loading
 
         // Function to destroy our overlay and load the emulator engine
         function bootGame() {
-            startScreen.style.display = 'none'; // Hide the Mario button
+            if (gameStarted) return;
+            gameStarted = true;
+            
+            // Hide the custom Mario screen
+            startScreen.style.display = 'none'; 
             
             // Dynamically inject the engine code only AFTER user interacts
             const script = document.createElement('script');
             script.src = "https://cdn.emulatorjs.org/latest/data/loader.js";
-            script.crossOrigin = "anonymous"; // Explicitly allows CORS for the CDN
+            script.crossOrigin = "anonymous"; // Bypass CORS
             document.body.appendChild(script);
         }
 
-        // Listen for a Mouse Click
+        // Listen for a Mouse Click on the pulsing text
         startBtn.addEventListener('click', bootGame);
 
-        // Listen for the Enter Key
+        // Listen for the Enter Key globally
         window.addEventListener('keydown', function(event) {
-            // Only trigger if the start screen is still visible
-            if (event.key === 'Enter' && startScreen.style.display !== 'none') {
+            if (event.key === 'Enter' && !gameStarted) {
                 bootGame();
             }
         });
