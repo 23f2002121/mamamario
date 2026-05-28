@@ -49,7 +49,6 @@
 <body>
 
     <div class="glass-card">
-        <!-- The Emulator sits here -->
         <div id="game-container"></div>
     </div>
 
@@ -58,46 +57,44 @@
     </div>
 
     <script type="text/javascript">
-    EJS_player = "#game-container";
-    EJS_core = "snes";
-    EJS_gameName = "Super Mario Kart";
-    EJS_gameUrl = "mariokart.sfc";
-    EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
-    
-    // Hardcoded custom controls for all visitors
-    EJS_defaultControls = {
-        0: { // 0 = Player 1
-            0: { value: " " },      // Button 0 (B Button / Accelerate) -> Spacebar
-            4: { value: "w" },      // Button 4 (D-Pad Up) -> W
-            5: { value: "s" },      // Button 5 (D-Pad Down) -> S
-            6: { value: "a" },      // Button 6 (D-Pad Left) -> A
-            7: { value: "d" },      // Button 7 (D-Pad Right) -> D
-            8: { value: "Shift" },  // Button 8 (A Button / Use Item) -> Shift
-            10: { value: "q" },     // Button 10 (L Shoulder / Hop) -> Q
-            11: { value: "e" },     // Button 11 (R Shoulder / Drift) -> E
-            3: { value: "Enter" }   // Button 3 (Start) -> Enter
-        }
-    };
-    
-    EJS_startOnLoaded = true;
-    EJS_volume = 0.5;
-    EJS_color = "#ffffff"; 
-    
-    EJS_Buttons = {
-        playPause: false,
-        restart: true,
-        saveState: false,
-        loadState: false,
-        cheats: false,
-        screenshot: false,
-        settings: true, 
-        fullscreen: true,
-        volume: true
-    };
+        window.EJS_player = "#game-container";
+        window.EJS_core = "snes";
+        window.EJS_gameName = "Super Mario Kart";
+        window.EJS_gameUrl = "mariokart.sfc";
+        window.EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+        
+        // Hardcoded custom controls for all visitors
+        window.EJS_defaultControls = {
+            0: { // 0 = Player 1
+                0: { value: " " },      // Button 0 (B Button / Accelerate) -> Spacebar
+                4: { value: "w" },      // Button 4 (D-Pad Up) -> W
+                5: { value: "s" },      // Button 5 (D-Pad Down) -> S
+                6: { value: "a" },      // Button 6 (D-Pad Left) -> A
+                7: { value: "d" },      // Button 7 (D-Pad Right) -> D
+                8: { value: "Shift" },  // Button 8 (A Button / Use Item) -> Shift
+                10: { value: "q" },     // Button 10 (L Shoulder / Hop) -> Q
+                11: { value: "e" },     // Button 11 (R Shoulder / Drift) -> E
+                3: { value: "Enter" }   // Button 3 (Start) -> Enter
+            }
+        };
+        
+        window.EJS_startOnLoaded = true;
+        window.EJS_volume = 0.5;
+        window.EJS_color = "#ffffff"; 
+        
+        window.EJS_Buttons = {
+            playPause: false,
+            restart: true,
+            saveState: false,
+            loadState: false,
+            cheats: false,
+            screenshot: false,
+            settings: true, 
+            fullscreen: true,
+            volume: true
+        };
     </script>
     
-    <!-- YOU ARE MISSING THIS LINE. ADD IT BACK IN: -->
     <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
-
 </body>
 </html>
