@@ -53,36 +53,19 @@
     </div>
 
     <div class="instructions">
-        Press <strong>Enter</strong> to Start. Hover over the game window to access control settings.
+        Hover over the game window and click the Gear Icon to map your WASD controls!
     </div>
 
     <script type="text/javascript">
-        window.EJS_player = "#game-container";
-        window.EJS_core = "snes";
-        window.EJS_gameName = "Super Mario Kart";
-        window.EJS_gameUrl = "mariokart.sfc";
-        window.EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+        EJS_player = "#game-container";
+        EJS_core = "snes";
+        EJS_gameName = "Super Mario Kart";
+        EJS_gameUrl = "mariokart.sfc";
+        EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+        EJS_volume = 0.5;
+        EJS_color = "#ffffff"; 
         
-        // Hardcoded custom controls for all visitors
-        window.EJS_defaultControls = {
-            0: { // 0 = Player 1
-                0: { value: " " },      // Button 0 (B Button / Accelerate) -> Spacebar
-                4: { value: "w" },      // Button 4 (D-Pad Up) -> W
-                5: { value: "s" },      // Button 5 (D-Pad Down) -> S
-                6: { value: "a" },      // Button 6 (D-Pad Left) -> A
-                7: { value: "d" },      // Button 7 (D-Pad Right) -> D
-                8: { value: "Shift" },  // Button 8 (A Button / Use Item) -> Shift
-                10: { value: "q" },     // Button 10 (L Shoulder / Hop) -> Q
-                11: { value: "e" },     // Button 11 (R Shoulder / Drift) -> E
-                3: { value: "Enter" }   // Button 3 (Start) -> Enter
-            }
-        };
-        
-        window.EJS_startOnLoaded = true;
-        window.EJS_volume = 0.5;
-        window.EJS_color = "#ffffff"; 
-        
-        window.EJS_Buttons = {
+        EJS_Buttons = {
             playPause: false,
             restart: true,
             saveState: false,
