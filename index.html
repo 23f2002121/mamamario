@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mario Kart</title>
+    <style>
+        /* Modern, dark-themed glassmorphism aesthetic */
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0f0f13 0%, #1a1a24 100%);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        #game-container {
+            width: 800px;
+            height: 600px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .instructions {
+            margin-top: 24px;
+            text-align: center;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glass-card">
+        <!-- The Emulator sits here -->
+        <div id="game-container"></div>
+    </div>
+
+    <div class="instructions">
+        Press <strong>Enter</strong> to Start. Hover over the game window to access control settings.
+    </div>
+
+    <script type="text/javascript">
+    EJS_player = "#game-container";
+    EJS_core = "snes";
+    EJS_gameName = "Super Mario Kart";
+    EJS_gameUrl = "Super Mario Kart (USA).sfc"; 
+    EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+    
+    // Hardcoded custom controls for all visitors
+    EJS_defaultControls = {
+        0: { // 0 = Player 1
+            0: { value: " " },      // Button 0 (B Button / Accelerate) -> Spacebar
+            4: { value: "w" },      // Button 4 (D-Pad Up) -> W
+            5: { value: "s" },      // Button 5 (D-Pad Down) -> S
+            6: { value: "a" },      // Button 6 (D-Pad Left) -> A
+            7: { value: "d" },      // Button 7 (D-Pad Right) -> D
+            8: { value: "Shift" },  // Button 8 (A Button / Use Item) -> Shift
+            10: { value: "q" },     // Button 10 (L Shoulder / Hop) -> Q
+            11: { value: "e" },     // Button 11 (R Shoulder / Drift) -> E
+            3: { value: "Enter" }   // Button 3 (Start) -> Enter
+        }
+    };
+    
+    EJS_startOnLoaded = true;
+    EJS_volume = 0.5;
+    EJS_color = "#ffffff"; 
+    
+    EJS_Buttons = {
+        playPause: false,
+        restart: true,
+        saveState: false,
+        loadState: false,
+        cheats: false,
+        screenshot: false,
+        settings: true, 
+        fullscreen: true,
+        volume: true
+    };
+</script>
+</body>
+</html>
